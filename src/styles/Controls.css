@@ -1,0 +1,94 @@
+@import './variables.css';
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* 中央揃えに変更 */
+  align-items: center;
+  width: 100%;
+  max-width: 500px;
+  padding: var(--spacing-md);
+  background-color: var(--aws-light-gray);
+  border-radius: var(--border-radius-md);
+  margin: 0 auto var(--spacing-md) auto;
+  gap: var(--spacing-xl); /* 要素間の間隔を広げる */
+}
+
+.control-group {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin: var(--spacing-xs) 0;
+}
+
+label {
+  font-weight: bold;
+  color: var(--aws-navy);
+}
+
+select {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border: 1px solid var(--aws-dark-gray);
+  border-radius: var(--border-radius-sm);
+  background-color: var(--aws-white);
+  color: var(--aws-navy);
+  font-size: var(--font-size-medium);
+  cursor: pointer;
+}
+
+.moves-counter {
+  font-weight: bold;
+  color: var(--aws-navy);
+  font-size: var(--font-size-medium);
+}
+
+.reset-button {
+  padding: var(--spacing-xs) var(--spacing-md);
+  background-color: var(--aws-orange);
+  color: var(--aws-white);
+  border: none;
+  border-radius: var(--border-radius-sm);
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+
+.reset-button:hover {
+  background-color: #d86600;
+}
+
+.completion-message {
+  width: 100%;
+  margin-top: var(--spacing-md);
+  padding: var(--spacing-sm);
+  background-color: var(--aws-orange);
+  color: var(--aws-white);
+  text-align: center;
+  border-radius: var(--border-radius-sm);
+  font-weight: bold;
+  animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 600px) {
+  .controls {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-md);
+  }
+  
+  .control-group {
+    width: 100%;
+    justify-content: center; /* モバイル表示でも中央揃え */
+  }
+}

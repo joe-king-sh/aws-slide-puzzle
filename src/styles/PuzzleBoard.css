@@ -1,0 +1,82 @@
+@import './variables.css';
+
+.puzzle-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-md); /* ギャップを小さくする */
+  max-width: 500px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.puzzle-board {
+  display: grid;
+  gap: 1px; /* ピース間のギャップを小さくする */
+  width: 100%;
+  max-width: 500px;
+  aspect-ratio: 1 / 1;
+  background-color: var(--aws-navy);
+  padding: var(--spacing-sm);
+  border-radius: var(--border-radius-md);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  margin: 0 auto;
+}
+
+.puzzle-piece {
+  position: relative;
+  background-color: var(--aws-light-gray);
+  border-radius: var(--border-radius-sm);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: var(--font-size-large);
+  color: var(--aws-navy);
+  cursor: default;
+  transition: transform var(--transition-normal), background-color var(--transition-normal);
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+}
+
+.puzzle-piece.movable {
+  cursor: pointer;
+}
+
+.puzzle-piece.movable:hover {
+  transform: scale(0.98);
+  box-shadow: 0 0 0 2px var(--aws-orange);
+}
+
+.puzzle-piece.empty {
+  background-color: transparent;
+}
+
+.puzzle-piece.completed {
+  animation: pulse 1s infinite alternate;
+}
+
+.piece-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.piece-number {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  font-size: var(--font-size-small);
+  background-color: rgba(255, 255, 255, 0.7);
+  padding: 2px 5px;
+  border-radius: var(--border-radius-sm);
+}
+
+@keyframes pulse {
+  from {
+    box-shadow: 0 0 0 0 rgba(237, 113, 0, 0.7);
+  }
+  to {
+    box-shadow: 0 0 0 5px rgba(237, 113, 0, 0);
+  }
+}
