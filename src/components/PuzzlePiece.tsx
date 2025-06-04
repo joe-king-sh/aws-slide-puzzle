@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import type { FC } from 'react';
 import '../styles/PuzzleBoard.css';
 
 interface PuzzlePieceProps {
@@ -15,10 +15,8 @@ interface PuzzlePieceProps {
 
 const PuzzlePiece: FC<PuzzlePieceProps> = ({
   value,
-  index,
-  size,
-  isMovable,
   isEmpty,
+  isMovable,
   onClick,
   isCompleted,
   imagePieces,

@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import type { FC } from 'react';
 import '../styles/PuzzleBoard.css';
 import PuzzlePiece from './PuzzlePiece';
 
