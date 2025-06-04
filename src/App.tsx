@@ -51,7 +51,7 @@ function App() {
       // 効果音を再生
       if (completeSoundObj) {
         completeSoundObj.currentTime = 0;
-        completeSoundObj.play().catch(error => console.error('効果音の再生に失敗しました:', error));
+        completeSoundObj.play().catch(error => console.error('Failed to play sound effect:', error));
       }
       
       // 紙吹雪を表示
@@ -90,15 +90,15 @@ function App() {
     const wasSuccessfulMove = handlePieceClick(index);
     if (wasSuccessfulMove && moveSoundObj) {
       moveSoundObj.currentTime = 0;
-      moveSoundObj.play().catch(error => console.error('効果音の再生に失敗しました:', error));
+      moveSoundObj.play().catch(error => console.error('Failed to play sound effect:', error));
     }
   };
 
   return (
     <div className="app">
       <header className="app-header">
-        <h1>AWS スライドパズル</h1>
-        <p>ピースを動かして元の画像に戻そう！</p>
+        <h1>Amazon Q Slide Puzzle</h1>
+        <p>Move the pieces to restore the original image!</p>
       </header>
       
       <main className="app-main">

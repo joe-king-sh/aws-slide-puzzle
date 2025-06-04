@@ -21,7 +21,7 @@ const Controls: FC<ControlsProps> = ({
   return (
     <div className="controls">
       <div className="control-group">
-        <label htmlFor="puzzle-size">パズルサイズ:</label>
+        <label htmlFor="puzzle-size">Puzzle Size:</label>
         <select
           id="puzzle-size"
           value={size}
@@ -37,18 +37,18 @@ const Controls: FC<ControlsProps> = ({
       </div>
       
       <div className="control-group">
-        <span className="moves-counter">手数: {moves}</span>
+        <span className="moves-counter">Moves: {moves}</span>
       </div>
       
       <div className="control-group">
         <button className="reset-button" onClick={onReset}>
-          リセット
+          Reset
         </button>
       </div>
       
       {isCompleted && (
         <div className="completion-message">
-          おめでとうございます！{moves}手でクリアしました！
+          Congratulations! Solved in {moves} moves!
         </div>
       )}
     </div>

@@ -1,47 +1,47 @@
-# AWS スライドパズル
+# Amazon Q Slide Puzzle
 
-AWS テーマのスライドパズルゲームです。React + TypeScript + Vite で実装されています。
+A sliding puzzle game featuring Amazon Q. Built with React + TypeScript + Vite.
 
-## 機能
+## Features
 
-- 複数のパズルサイズ（3x3, 4x4, 5x5）から選択可能
-- 手数カウンター
-- 効果音（移動時、完成時）
-- 紙吹雪エフェクト（完成時）
-- モバイル対応（タッチ操作）
+- Multiple puzzle sizes (3x3, 4x4, 5x5)
+- Move counter
+- Sound effects (piece movement, puzzle completion)
+- Confetti effect (on completion)
+- Mobile-friendly (touch controls)
 
-## 開発環境のセットアップ
+## Development Setup
 
 ```bash
-# リポジトリをクローン
-git clone https://github.com/yourusername/aws-slide-puzzle.git
-cd aws-slide-puzzle
+# Clone the repository
+git clone https://github.com/yourusername/amazon-q-slide-puzzle.git
+cd amazon-q-slide-puzzle
 
-# 依存関係のインストール
+# Install dependencies
 npm install
 
-# 開発サーバーの起動
+# Start development server
 npm run dev
 ```
 
-## ビルドとデプロイ
+## Build and Deploy
 
 ```bash
-# プロダクションビルド
+# Production build
 npm run build
 
-# ローカルでプレビュー
+# Local preview
 npm run preview
 ```
 
-GitHub Actions を使用して、`main` ブランチにプッシュすると自動的に GitHub Pages にデプロイされます。
+The project is automatically deployed to GitHub Pages when changes are pushed to the `main` branch using GitHub Actions.
 
-## 必要なアセット
+## Required Assets
 
-- `src/assets/images/amazon-q.png` - Amazon Q の画像
-- `src/assets/sounds/move.mp3` - ピース移動時の効果音
-- `src/assets/sounds/complete.mp3` - パズル完成時の拍手音
+- `src/assets/images/amazon-q.png` - Amazon Q image
+- `src/assets/sounds/move.mp3` - Sound effect for piece movement
+- `src/assets/sounds/complete.mp3` - Applause sound for puzzle completion
 
-## ライセンス
+## License
 
-このプロジェクトは MIT ライセンスの下で公開されています。
+This project is released under the MIT License.
