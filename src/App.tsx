@@ -1,19 +1,19 @@
-import { useState, useEffect } from "react";
-import "./App.css";
-import "./styles/variables.css";
-import PuzzleBoard from "./components/PuzzleBoard";
-import Controls from "./components/Controls";
-import { usePuzzle } from "./hooks/usePuzzle";
-import { useImageSplitter } from "./hooks/useImageSplitter";
-import amazonQImage from "./assets/images/amazon-q.png";
-import moveSound from "./assets/sounds/move.mp3";
-import completeSound from "./assets/sounds/complete.mp3";
-import confetti from "canvas-confetti";
+import { useState, useEffect } from 'react';
+import './App.css';
+import './styles/variables.css';
+import PuzzleBoard from './components/PuzzleBoard';
+import Controls from './components/Controls';
+import { usePuzzle } from './hooks/usePuzzle';
+import { useImageSplitter } from './hooks/useImageSplitter';
+import amazonQImage from './assets/images/amazon-q.png';
+import moveSound from './assets/sounds/move.mp3';
+import completeSound from './assets/sounds/complete.mp3';
+import confetti from 'canvas-confetti';
 
 function App() {
   const [initialSize] = useState(3);
-  const [theme, setTheme] = useState<"light" | "dark">("light");
-
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  
   const {
     board,
     emptyIndex,
@@ -22,38 +22,34 @@ function App() {
     isCompleted,
     handlePieceClick,
     setSize,
-    resetPuzzle,
+    resetPuzzle
   } = usePuzzle(initialSize);
 
   // 画像分割フックを使用
   const { pieces, loaded } = useImageSplitter(amazonQImage, size);
 
   // 効果音の設定
-  const [moveSoundObj, setMoveSoundObj] = useState<HTMLAudioElement | null>(
-    null
-  );
-  const [completeSoundObj, setCompleteSoundObj] =
-    useState<HTMLAudioElement | null>(null);
+  const [moveSoundObj, setMoveSoundObj] = useState<HTMLAudioElement | null>(null);
+  const [completeSoundObj, setCompleteSoundObj] = useState<HTMLAudioElement | null>(null);
 
   // テーマの切り替え
   const toggleTheme = () => {
-    // setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light');
-    setTheme((prevTheme) => (prevTheme === "light" ? "light" : "dark"));
+    setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light');
   };
 
   // テーマの適用
   useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
+    document.documentElement.setAttribute('data-theme', theme);
   }, [theme]);
 
   useEffect(() => {
     // 効果音の読み込み
     const moveSoundElement = new Audio(moveSound);
     const completeSoundElement = new Audio(completeSound);
-
+    
     setMoveSoundObj(moveSoundElement);
     setCompleteSoundObj(completeSoundElement);
-
+    
     return () => {
       // クリーンアップ
       moveSoundElement.pause();
@@ -67,40 +63,36 @@ function App() {
       // 効果音を再生
       if (completeSoundObj) {
         completeSoundObj.currentTime = 0;
-        completeSoundObj
-          .play()
-          .catch((error) =>
-            console.error("Failed to play sound effect:", error)
-          );
+        completeSoundObj.play().catch(error => console.error('Failed to play sound effect:', error));
       }
-
+      
       // 紙吹雪を表示
       const duration = 3000; // 3秒間
       const animationEnd = Date.now() + duration;
-      const colors = ["#ED7100", "#161D26", "#FF9900", "#FFFFFF", "#232F3E"];
-
+      const colors = ['#ED7100', '#161D26', '#FF9900', '#FFFFFF', '#232F3E'];
+      
       const frame = () => {
         confetti({
           particleCount: 2,
           angle: 60,
           spread: 55,
           origin: { x: 0 },
-          colors: colors,
+          colors: colors
         });
-
+        
         confetti({
           particleCount: 2,
           angle: 120,
           spread: 55,
           origin: { x: 1 },
-          colors: colors,
+          colors: colors
         });
-
+        
         if (Date.now() < animationEnd) {
           requestAnimationFrame(frame);
         }
       };
-
+      
       frame();
     }
   }, [isCompleted, completeSoundObj]);
@@ -110,9 +102,7 @@ function App() {
     const wasSuccessfulMove = handlePieceClick(index);
     if (wasSuccessfulMove && moveSoundObj) {
       moveSoundObj.currentTime = 0;
-      moveSoundObj
-        .play()
-        .catch((error) => console.error("Failed to play sound effect:", error));
+      moveSoundObj.play().catch(error => console.error('Failed to play sound effect:', error));
     }
   };
 
@@ -121,15 +111,15 @@ function App() {
       <header className="app-header">
         <h1>Amazon Q Slide Puzzle</h1>
         <p>Move the pieces to restore the original image!</p>
-        <button
-          className="theme-toggle"
+        <button 
+          className="theme-toggle" 
           onClick={toggleTheme}
-          aria-label={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
+          aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
         >
-          {theme === "light" ? "🌙" : "☀️"}
+          {theme === 'light' ? '🌙' : '☀️'}
         </button>
       </header>
-
+      
       <main className="app-main">
         <div className="puzzle-container">
           <Controls
@@ -139,7 +129,7 @@ function App() {
             onReset={resetPuzzle}
             isCompleted={isCompleted}
           />
-
+          
           <PuzzleBoard
             size={size}
             board={board}
@@ -151,7 +141,7 @@ function App() {
           />
         </div>
       </main>
-
+      
       <footer className="app-footer">
         <p>Powered by Amazon Q</p>
       </footer>
