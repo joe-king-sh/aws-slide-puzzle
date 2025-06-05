@@ -6,7 +6,10 @@ interface ControlsProps {
   moves: number;
   onSizeChange: (size: number) => void;
   onReset: () => void;
+  onAutoSolve: () => void;
   isCompleted: boolean;
+  isSolving: boolean;
+  solverProgress: number;
 }
 
 const Controls: FC<ControlsProps> = ({
@@ -14,7 +17,10 @@ const Controls: FC<ControlsProps> = ({
   moves,
   onSizeChange,
   onReset,
-  isCompleted
+  onAutoSolve,
+  isCompleted,
+  isSolving,
+  solverProgress
 }) => {
   const sizeOptions = [3, 4, 5];
   
@@ -26,7 +32,7 @@ const Controls: FC<ControlsProps> = ({
           id="puzzle-size"
           value={size}
           onChange={(e) => onSizeChange(Number(e.target.value))}
-          disabled={isCompleted}
+          disabled={isCompleted || isSolving}
         >
           {sizeOptions.map((option) => (
             <option key={option} value={option}>
@@ -41,10 +47,34 @@ const Controls: FC<ControlsProps> = ({
       </div>
       
       <div className="control-group">
-        <button className="reset-button" onClick={onReset}>
+        <button 
+          className="reset-button" 
+          onClick={onReset}
+          disabled={isSolving}
+        >
           Reset
         </button>
+        
+        <button 
+          className="auto-solve-button" 
+          onClick={onAutoSolve}
+          disabled={isCompleted || isSolving}
+        >
+          {isSolving ? 'Solving...' : 'Auto Solve'}
+        </button>
       </div>
+      
+      {isSolving && (
+        <div className="solver-progress">
+          <div className="progress-bar">
+            <div 
+              className="progress-fill"
+              style={{ width: `${solverProgress}%` }}
+            />
+          </div>
+          <span className="progress-text">{Math.round(solverProgress)}%</span>
+        </div>
+      )}
       
       {isCompleted && (
         <div className="completion-message">

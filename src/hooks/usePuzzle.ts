@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { usePuzzleSolver } from './usePuzzleSolver';
 
 interface UsePuzzleReturn {
   board: number[];
@@ -6,9 +7,12 @@ interface UsePuzzleReturn {
   moves: number;
   size: number;
   isCompleted: boolean;
+  isSolving: boolean;
+  solverProgress: number;
   handlePieceClick: (index: number) => boolean;
   setSize: (newSize: number) => void;
   resetPuzzle: () => void;
+  autoSolvePuzzle: () => void;
 }
 
 export const usePuzzle = (initialSize: number = 3): UsePuzzleReturn => {
@@ -17,6 +21,9 @@ export const usePuzzle = (initialSize: number = 3): UsePuzzleReturn => {
   const [emptyIndex, setEmptyIndex] = useState<number>(0);
   const [moves, setMoves] = useState<number>(0);
   const [isCompleted, setIsCompleted] = useState<boolean>(false);
+  const [solverProgress, setSolverProgress] = useState<number>(0);
+
+  const { solvePuzzle, isSolving } = usePuzzleSolver();
 
   // パズルの初期化
   const initializeBoard = useCallback(() => {
@@ -26,6 +33,7 @@ export const usePuzzle = (initialSize: number = 3): UsePuzzleReturn => {
     setEmptyIndex(totalPieces - 1);
     setMoves(0);
     setIsCompleted(false);
+    setSolverProgress(0);
   }, [size]);
 
   // パズルのシャッフル
@@ -54,6 +62,7 @@ export const usePuzzle = (initialSize: number = 3): UsePuzzleReturn => {
     setEmptyIndex(newEmptyIndex);
     setMoves(0);
     setIsCompleted(false);
+    setSolverProgress(0);
   }, [size]);
 
   // パズルのリセット
@@ -71,7 +80,7 @@ export const usePuzzle = (initialSize: number = 3): UsePuzzleReturn => {
 
   // ピースクリック時の処理
   const handlePieceClick = useCallback((index: number) => {
-    if (isCompleted) return false;
+    if (isCompleted || isSolving) return false;
     
     // 空白と隣接しているかチェック
     if (!isAdjacent(index, emptyIndex, size)) return false;
@@ -88,7 +97,55 @@ export const usePuzzle = (initialSize: number = 3): UsePuzzleReturn => {
     checkCompletion(newBoard);
     
     return true; // 移動が成功したことを返す
-  }, [board, emptyIndex, size, moves, isCompleted]);
+  }, [board, emptyIndex, size, moves, isCompleted, isSolving]);
+
+  // 自動解決機能
+  const autoSolvePuzzle = useCallback(async () => {
+    if (isCompleted || isSolving) return;
+
+    setSolverProgress(0);
+    
+    try {
+      const result = await solvePuzzle(board, size, (progress: number) => {
+        setSolverProgress(progress);
+      });
+
+      if (result.isValid && result.solution.length > 0) {
+        // 解決手順を順番に実行
+        for (let i = 0; i < result.solution.length; i++) {
+          await new Promise(resolve => setTimeout(resolve, 300)); // 300ms間隔で実行
+          
+          const moveIndex = result.solution[i];
+          setBoard((prevBoard: number[]) => {
+            const newBoard = [...prevBoard];
+            const currentEmptyIndex = newBoard.indexOf(0);
+            [newBoard[currentEmptyIndex], newBoard[moveIndex]] = [newBoard[moveIndex], newBoard[currentEmptyIndex]];
+            return newBoard;
+          });
+          
+          setEmptyIndex(result.solution[i]);
+          setMoves((prevMoves: number) => prevMoves + 1);
+        }
+        
+        // 最終チェック
+        setTimeout(() => {
+          setBoard((currentBoard: number[]) => {
+            checkCompletion(currentBoard);
+            return currentBoard;
+          });
+        }, 100);
+        
+      } else if (!result.isValid) {
+        console.warn('このパズルは解決できません');
+      } else {
+        console.warn('解決策が見つかりませんでした');
+      }
+    } catch (error) {
+      console.error('自動解決中にエラーが発生しました:', error);
+    } finally {
+      setSolverProgress(0);
+    }
+  }, [board, size, isCompleted, isSolving, solvePuzzle]);
 
   // 完成チェック
   const checkCompletion = useCallback((currentBoard: number[]) => {
@@ -112,9 +169,12 @@ export const usePuzzle = (initialSize: number = 3): UsePuzzleReturn => {
     moves,
     size,
     isCompleted,
+    isSolving,
+    solverProgress,
     handlePieceClick,
     setSize: handleSizeChange,
-    resetPuzzle
+    resetPuzzle,
+    autoSolvePuzzle
   };
 };
 

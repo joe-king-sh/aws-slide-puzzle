@@ -20,9 +20,12 @@ function App() {
     moves,
     size,
     isCompleted,
+    isSolving,
+    solverProgress,
     handlePieceClick,
     setSize,
-    resetPuzzle
+    resetPuzzle,
+    autoSolvePuzzle
   } = usePuzzle(initialSize);
 
   // 画像分割フックを使用
@@ -127,7 +130,10 @@ function App() {
             moves={moves}
             onSizeChange={setSize}
             onReset={resetPuzzle}
+            onAutoSolve={autoSolvePuzzle}
             isCompleted={isCompleted}
+            isSolving={isSolving}
+            solverProgress={solverProgress}
           />
           
           <PuzzleBoard
