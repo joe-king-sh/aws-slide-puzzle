@@ -8,10 +8,11 @@
   width: 100%;
   max-width: 500px;
   padding: var(--spacing-md);
-  background-color: var(--aws-light-gray);
+  background-color: var(--control-bg);
   border-radius: var(--border-radius-md);
   margin: 0 auto var(--spacing-md) auto;
   gap: var(--spacing-xl); /* 要素間の間隔を広げる */
+  transition: background-color var(--transition-normal);
 }
 
 .control-group {
@@ -23,23 +24,26 @@
 
 label {
   font-weight: bold;
-  color: var(--aws-navy);
+  color: var(--text-color);
+  transition: color var(--transition-normal);
 }
 
 select {
   padding: var(--spacing-xs) var(--spacing-sm);
-  border: 1px solid var(--aws-dark-gray);
+  border: 1px solid var(--secondary-text-color);
   border-radius: var(--border-radius-sm);
-  background-color: var(--aws-white);
-  color: var(--aws-navy);
+  background-color: var(--button-bg);
+  color: var(--text-color);
   font-size: var(--font-size-medium);
   cursor: pointer;
+  transition: all var(--transition-normal);
 }
 
 .moves-counter {
   font-weight: bold;
-  color: var(--aws-navy);
+  color: var(--text-color);
   font-size: var(--font-size-medium);
+  transition: color var(--transition-normal);
 }
 
 .reset-button {

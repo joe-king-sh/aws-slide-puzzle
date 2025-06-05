@@ -12,6 +12,8 @@ import confetti from 'canvas-confetti';
 
 function App() {
   const [initialSize] = useState(3);
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  
   const {
     board,
     emptyIndex,
@@ -29,6 +31,16 @@ function App() {
   // 効果音の設定
   const [moveSoundObj, setMoveSoundObj] = useState<HTMLAudioElement | null>(null);
   const [completeSoundObj, setCompleteSoundObj] = useState<HTMLAudioElement | null>(null);
+
+  // テーマの切り替え
+  const toggleTheme = () => {
+    setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light');
+  };
+
+  // テーマの適用
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+  }, [theme]);
 
   useEffect(() => {
     // 効果音の読み込み
@@ -99,6 +111,13 @@ function App() {
       <header className="app-header">
         <h1>Amazon Q Slide Puzzle</h1>
         <p>Move the pieces to restore the original image!</p>
+        <button 
+          className="theme-toggle" 
+          onClick={toggleTheme}
+          aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+        >
+          {theme === 'light' ? '🌙' : '☀️'}
+        </button>
       </header>
       
       <main className="app-main">

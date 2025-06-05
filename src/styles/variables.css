@@ -31,4 +31,26 @@
   --transition-fast: 0.2s ease;
   --transition-normal: 0.3s ease;
   --transition-slow: 0.5s ease;
+  
+  /* ライトモード（デフォルト）のカラー */
+  --bg-color: var(--aws-light-gray);
+  --text-color: var(--aws-navy);
+  --secondary-text-color: var(--aws-dark-gray);
+  --button-bg: #f9f9f9;
+  --button-border-hover: var(--aws-orange);
+  --control-bg: var(--aws-white);
+  --puzzle-piece-bg: var(--aws-white);
+  --puzzle-piece-border: #ddd;
+}
+
+/* ダークモード */
+[data-theme="dark"] {
+  --bg-color: #121212;
+  --text-color: #f2f3f3;
+  --secondary-text-color: #b0b0b0;
+  --button-bg: #2a2a2a;
+  --button-border-hover: var(--aws-orange);
+  --control-bg: #1e1e1e;
+  --puzzle-piece-bg: #2a2a2a;
+  --puzzle-piece-border: #444;
 }

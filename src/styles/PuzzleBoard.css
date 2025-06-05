@@ -25,16 +25,16 @@
 
 .puzzle-piece {
   position: relative;
-  background-color: var(--aws-light-gray);
+  background-color: var(--puzzle-piece-bg);
   border-radius: var(--border-radius-sm);
   display: flex;
   justify-content: center;
   align-items: center;
   font-weight: bold;
   font-size: var(--font-size-large);
-  color: var(--aws-navy);
+  color: var(--text-color);
   cursor: default;
-  transition: transform var(--transition-normal), background-color var(--transition-normal);
+  transition: transform var(--transition-normal), background-color var(--transition-normal), color var(--transition-normal);
   aspect-ratio: 1 / 1;
   overflow: hidden;
 }
