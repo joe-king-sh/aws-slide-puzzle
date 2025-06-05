@@ -16,7 +16,7 @@ const Controls: FC<ControlsProps> = ({
   onReset,
   isCompleted
 }) => {
-  const sizeOptions = [3, 4, 5];
+  const sizeOptions = [3, 4, 5, 6];
   
   return (
     <div className="controls">
